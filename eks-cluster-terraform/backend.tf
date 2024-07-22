@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "task-master-eks-cluster-terraform"
-    key    = "task-master-pro/terraform.tfstate"
+    key    = "path/to/my/key"
     region = "us-east-1"
 
   }
