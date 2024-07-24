@@ -50,6 +50,7 @@ jobs:
         
   Docker-Build:
    runs-on: self-hosted
+   needs: build
    environment: prod
    steps:
     - name: Set up QEMU
@@ -78,6 +79,7 @@ jobs:
         
   Deploy:
    runs-on: self-hosted
+   needs: Docker-Build
    environment: prod
    steps:
     - name: Kubectl Action
@@ -85,5 +87,5 @@ jobs:
       with:
         base64-kube-config: ${{ secrets.KUBE_CONFIG }}
     - run: |
-       kubectl apply -f deployment-service.yaml -n webapps
+       kubectl apply -f deployment-service.yml -n webapps
        kubectl get svc -n webapps
