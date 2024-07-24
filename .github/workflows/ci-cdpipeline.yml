@@ -4,7 +4,9 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+  
 jobs:
+
   build:
    runs-on: self-hosted
    environment: prod
@@ -45,7 +47,11 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-    
+        
+  Docker-Build:
+   runs-on: self-hosted
+   environment: prod
+   steps:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     
@@ -69,7 +75,11 @@ jobs:
     - name: Push Docker Image
       run: |
         docker push nishantg98/task-master-pro:latest
-
+        
+  Deploy:
+   runs-on: self-hosted
+   environment: prod
+   steps:
     - name: Kubectl Action
       uses: tale/kubectl-action@v1
       with:
